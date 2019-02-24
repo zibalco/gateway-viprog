@@ -54,15 +54,15 @@ function callback__zibal($data)
 	global $db,$get;
 	
 	$MerchantID 		= $data['merchant'];
-	$trackId 			= $_POST['trackId'];
-	$InvoiceNumber 		= $_POST['orderId'];
+	$trackId 			= $_GET['trackId'];
+	$InvoiceNumber 		= $_GET['orderId'];
 	
 	$sql 				= 'SELECT * FROM `payment` WHERE `payment_rand` = "'.$InvoiceNumber.'" LIMIT 1;';
 	$payment 			= $db->query($sql)->fetch();
 
 	$Price 				= $payment['payment_amount'];
 
-	if ($_POST['success'] == 1) {
+	if ($_GET['success'] == 1) {
 		
 		 //start verfication
    		 $parameters = array(
@@ -97,7 +97,7 @@ function callback__zibal($data)
  */
 function postToZibal($path, $parameters)
 {
-    $url = 'https://gateway.zibal.ir/'.$path;
+    $url = 'https://gateway.zibal.ir/v1/'.$path;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
